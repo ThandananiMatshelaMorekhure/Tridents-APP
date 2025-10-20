@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_teal">#2c5f6f</color>
+    <color name="primary_dark">#1e4a56</color>
+    <color name="primary_light">#4a8a9b</color>
+    <color name="emergency_red">#ff5252</color>
+    <color name="background_gradient">#f8f9ff</color>
+    <color name="text_secondary">#666666</color>
+    <color name="teal_primary">#4a90a4</color>
+    <color name="primary_blue">#2A3B56</color>
+    <color name="secondary_blue">#4A90A4</color>
+
+    <color name="background_light">#F8FAFF</color>
+    <color name="text_primary">#2A3B56</color>
+
+</resources>
