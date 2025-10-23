@@ -1,66 +1,26 @@
 {
   "project_info": {
-    "project_number": "891427606470",
-    "firebase_url": "https://tridentsolutionsdb-default-rtdb.firebaseio.com",
-    "project_id": "tridentsolutionsdb",
-    "storage_bucket": "tridentsolutionsdb.firebasestorage.app"
+    "project_number": "225127868321",
+    "project_id": "test-9b3c6",
+    "storage_bucket": "test-9b3c6.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:891427606470:android:5505d38d35c11e3c6e6cc7",
-        "android_client_info": {
-          "package_name": "com.donation.tridentsmartsolutions"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "891427606470-psf5anp64cgiqke1oki0aj7aulskd81s.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAzPw-I9C4M98Bnig2qSCdMuheKE8BQL0w"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "891427606470-dnp6ga632ql6d406mlmgrlfp2hsp7vld.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:891427606470:android:c574edcd5add9faa6e6cc7",
+        "mobilesdk_app_id": "1:225127868321:android:45f7f472d78b1d8a590de0",
         "android_client_info": {
           "package_name": "student.projects.tridentsmartsolutions"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "891427606470-psf5anp64cgiqke1oki0aj7aulskd81s.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAzPw-I9C4M98Bnig2qSCdMuheKE8BQL0w"
+          "current_key": "AIzaSyB_v_roOtFR2q_w_hqOgn9BpEo9lUUimf0"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "891427606470-dnp6ga632ql6d406mlmgrlfp2hsp7vld.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

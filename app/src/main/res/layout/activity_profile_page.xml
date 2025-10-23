@@ -7,6 +7,7 @@
     android:background="@color/background_gradient"
     tools:context=".ProfilePage">
 
+
     <!-- Header Section -->
     <androidx.cardview.widget.CardView
         android:id="@+id/header_card"
@@ -270,6 +271,22 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="16dp" />
+
+                    <Button
+                        android:id="@+id/btn_Status_Report"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/button_outline"
+                        android:text="Status Reports"
+                        android:textColor="@color/primary_dark"
+                        android:textSize="16sp"
+                        android:drawableStart="@drawable/ic_edit"
+                        android:drawablePadding="8dp"
+                        android:gravity="start|center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp" />
+
 
                     <!-- Edit Profile Button -->
                     <Button

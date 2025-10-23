@@ -10,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class SignupPage : AppCompatActivity() {
 
@@ -24,16 +26,26 @@ class SignupPage : AppCompatActivity() {
     private lateinit var btnSignup: Button
     private lateinit var tvGotoLogin: TextView
 
-    // SharedPreferences for storing user data
+    // Firebase
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
+
+    // SharedPreferences
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_page)
 
+        initializeFirebase()
         initializeViews()
         initializePreferences()
         setupClickListeners()
+    }
+
+    private fun initializeFirebase() {
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
     }
 
     private fun initializeViews() {
@@ -75,22 +87,67 @@ class SignupPage : AppCompatActivity() {
             return
         }
 
-        // Check if user already exists
-        if (userExists(email)) {
-            Toast.makeText(this, "User with this email already exists", Toast.LENGTH_SHORT).show()
-            return
-        }
+        // Show loading state
+        btnSignup.isEnabled = false
+        btnSignup.text = "Creating account..."
 
-        // Create new user account
-        if (createUserAccount(fullName, email, phone, address, password)) {
-            Toast.makeText(this, "Account created successfully!", Toast.LENGTH_SHORT).show()
+        // Create user with Firebase Authentication
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign up success
+                    val user = auth.currentUser
+                    user?.let {
+                        // Save user data to Realtime Database
+                        saveUserDataToDatabase(it.uid, fullName, email, phone, address)
+                    }
+                } else {
+                    // Sign up failed
+                    btnSignup.isEnabled = true
+                    btnSignup.text = "Create Account"
+                    Toast.makeText(
+                        this,
+                        "Sign up failed: ${task.exception?.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+    }
 
-            // Auto-login after successful registration
-            saveUserSession(email)
-            navigateToMain()
-        } else {
-            Toast.makeText(this, "Failed to create account. Please try again.", Toast.LENGTH_SHORT).show()
-        }
+    private fun saveUserDataToDatabase(
+        uid: String,
+        fullName: String,
+        email: String,
+        phone: String,
+        address: String
+    ) {
+        val userRef = database.getReference("users").child(uid)
+
+        val userData = hashMapOf(
+            "fullName" to fullName,
+            "email" to email,
+            "phone" to phone,
+            "address" to address,
+            "registrationDate" to System.currentTimeMillis()
+        )
+
+        userRef.setValue(userData)
+            .addOnSuccessListener {
+                // Save session
+                saveUserSession(uid, email)
+
+                Toast.makeText(this, "Account created successfully!", Toast.LENGTH_SHORT).show()
+                navigateToMain()
+            }
+            .addOnFailureListener { e ->
+                btnSignup.isEnabled = true
+                btnSignup.text = "Create Account"
+                Toast.makeText(
+                    this,
+                    "Failed to save user data: ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
     }
 
     private fun validateSignupInputs(
@@ -160,45 +217,16 @@ class SignupPage : AppCompatActivity() {
         }
     }
 
-    private fun userExists(email: String): Boolean {
-        val existingEmail = sharedPreferences.getString("user_email", "")
-        return email.equals(existingEmail, ignoreCase = true)
-    }
-
-    private fun createUserAccount(
-        fullName: String,
-        email: String,
-        phone: String,
-        address: String,
-        password: String
-    ): Boolean {
-        try {
-            // TODO: In production, send data to server API
-            // For now, store locally in SharedPreferences
-            with(sharedPreferences.edit()) {
-                putString("user_full_name", fullName)
-                putString("user_email", email)
-                putString("user_phone", phone)
-                putString("user_address", address)
-                putString("user_password", password) // In production, hash this password!
-                putLong("registration_date", System.currentTimeMillis())
-                apply()
-            }
-            return true
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return false
-        }
-    }
-
-    private fun saveUserSession(email: String) {
+    private fun saveUserSession(uid: String, email: String) {
         with(sharedPreferences.edit()) {
             putBoolean("is_logged_in", true)
+            putString("current_user_uid", uid)
             putString("current_user_email", email)
             putLong("login_timestamp", System.currentTimeMillis())
             apply()
         }
     }
+
 
     private fun navigateToLogin() {
         val intent = Intent(this, LoginPage::class.java)

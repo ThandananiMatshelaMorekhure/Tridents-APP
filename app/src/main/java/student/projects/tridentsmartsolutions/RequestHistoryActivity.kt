@@ -23,6 +23,7 @@ class RequestHistoryActivity : AppCompatActivity() {
     private lateinit var emptyState: LinearLayout
     private lateinit var requestAdapter: RequestHistoryAdapter
 
+
     // Navigation
     private lateinit var navHome: MaterialCardView
     private lateinit var navRequest: MaterialCardView

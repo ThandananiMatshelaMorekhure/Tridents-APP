@@ -1,6 +1,5 @@
 package student.projects.tridentsmartsolutions
 
-
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -21,6 +20,8 @@ class ProfilePage : AppCompatActivity() {
     private lateinit var btnChangePassword: Button
     private lateinit var btnLogout: Button
 
+    private lateinit var btnStatus: Button
+
     // Navigation
     private lateinit var navHome: MaterialCardView
     private lateinit var navRequest: MaterialCardView
@@ -39,6 +40,12 @@ class ProfilePage : AppCompatActivity() {
         loadUserData()
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Reload user data when returning from Edit Profile
+        loadUserData()
+    }
+
     private fun initializeViews() {
         tvUserName = findViewById(R.id.tv_user_name)
         tvUserEmail = findViewById(R.id.tv_user_email)
@@ -47,6 +54,7 @@ class ProfilePage : AppCompatActivity() {
         btnEditProfile = findViewById(R.id.btn_edit_profile)
         btnChangePassword = findViewById(R.id.btn_change_password)
         btnLogout = findViewById(R.id.btn_logout)
+        btnStatus = findViewById(R.id.btn_Status_Report)
 
         // Navigation
         navHome = findViewById(R.id.nav_home)
@@ -58,15 +66,14 @@ class ProfilePage : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("TridentPrefs", MODE_PRIVATE)
     }
 
+
     private fun setupClickListeners() {
         btnEditProfile.setOnClickListener {
-            // TODO: Implement edit profile functionality
-            Toast.makeText(this, "Edit profile feature coming soon", Toast.LENGTH_SHORT).show()
+            navigateToEditProfile()
         }
 
         btnChangePassword.setOnClickListener {
-            // TODO: Implement change password functionality
-            Toast.makeText(this, "Change password feature coming soon", Toast.LENGTH_SHORT).show()
+            navigateToChangePassword()
         }
 
         btnLogout.setOnClickListener {
@@ -85,6 +92,10 @@ class ProfilePage : AppCompatActivity() {
         navAccount.setOnClickListener {
             // Already on profile page
         }
+
+        btnStatus.setOnClickListener {
+            navigateToStatusReport()
+        }
     }
 
     private fun loadUserData() {
@@ -97,6 +108,21 @@ class ProfilePage : AppCompatActivity() {
         tvUserEmail.text = email
         tvUserPhone.text = phone
         tvUserAddress.text = address
+    }
+
+    private fun navigateToStatusReport(){
+        val intent = Intent(this, RequestHistoryActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToEditProfile() {
+        val intent = Intent(this, EditProfileActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToChangePassword() {
+        val intent = Intent(this, ChangePasswordActivity::class.java)
+        startActivity(intent)
     }
 
     private fun logoutUser() {

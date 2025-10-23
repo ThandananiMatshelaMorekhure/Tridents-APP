@@ -1,4 +1,5 @@
 package student.projects.tridentsmartsolutions
+
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -39,7 +40,7 @@ class RequestPage : AppCompatActivity() {
         btnRequestSecurity = findViewById(R.id.btn_request_security)
         btnEmergencyRequest = findViewById(R.id.btn_emergency_request)
 
-        // Navigation Items
+        // Bottom Navigation Items
         navHome = findViewById(R.id.nav_home)
         navRequest = findViewById(R.id.nav_request)
         navNotifications = findViewById(R.id.nav_notifications)
@@ -47,7 +48,7 @@ class RequestPage : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
-        // Service Request Button Listeners
+        // 🔧 Service Buttons → Go to Request Form
         btnRequestPlumbing.setOnClickListener {
             navigateToRequestForm(SERVICE_TYPE_PLUMBING)
         }
@@ -60,43 +61,37 @@ class RequestPage : AppCompatActivity() {
             navigateToRequestForm(SERVICE_TYPE_EMERGENCY)
         }
 
-        // Bottom Navigation Listeners
-        navHome.setOnClickListener {
-            navigateToHome()
-        }
-
-        navRequest.setOnClickListener {
-            // Already on request page - do nothing or refresh
-        }
-
-//        navNotifications.setOnClickListener {
-//            navigateToNotifications()
-//        }
-
-//        navAccount.setOnClickListener {
-//            navigateToAccount()
-//        }
+        // 🔻 Bottom Navigation
+        navHome.setOnClickListener { navigateToHome() }
+        navRequest.setOnClickListener { /* Already here */ }
+        navNotifications.setOnClickListener { navigateToServiceRequest() }
+        navAccount.setOnClickListener { navigateToProfile() }
     }
 
+
+    // 🔹 Navigates to the RequestFormActivity
     private fun navigateToRequestForm(serviceType: String) {
-        val intent = Intent(this, RequestPage::class.java)
+        val intent = Intent(this, RequestFormActivity::class.java)
         intent.putExtra(EXTRA_SERVICE_TYPE, serviceType)
         startActivity(intent)
     }
 
+    // 🔹 Navigates to Main (Home)
     private fun navigateToHome() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, RequestPage::class.java)
         startActivity(intent)
         finish()
     }
 
-//    private fun navigateToNotifications() {
-//        val intent = Intent(this, NotificationsActivity::class.java)
-//        startActivity(intent)
-//    }
+    // 🔹 Navigates to ServiceRequest (Notifications tab)
+    private fun navigateToServiceRequest() {
+        val intent = Intent(this, ServiceRequest::class.java)
+        startActivity(intent)
+    }
 
-//    private fun navigateToAccount() {
-//        val intent = Intent(this, AccountActivity::class.java)
-//        startActivity(intent)
-//    }
+    // 🔹 Navigates to ProfilePage (Account tab)
+    private fun navigateToProfile() {
+        val intent = Intent(this, ProfilePage::class.java)
+        startActivity(intent)
+    }
 }

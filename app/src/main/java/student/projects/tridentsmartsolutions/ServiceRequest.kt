@@ -12,7 +12,8 @@ data class ServiceRequest(
     val timestamp: Long = System.currentTimeMillis(),
     val status: String = "pending", // pending, in_progress, completed, cancelled
     val userId: String = ""
-) {
+)
+{
     // No-argument constructor for Firebase
     constructor() : this("", "", "", "", 0L, "", 0L, "pending", "")
 

@@ -13,6 +13,7 @@ class RequestHistoryAdapter(
     private val onItemClick: (ServiceRequest) -> Unit
 ) : RecyclerView.Adapter<RequestHistoryAdapter.RequestViewHolder>() {
 
+
     inner class RequestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivServiceIcon: ImageView = itemView.findViewById(R.id.iv_service_icon)
         val tvServiceType: TextView = itemView.findViewById(R.id.tv_service_type)

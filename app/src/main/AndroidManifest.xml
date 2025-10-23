@@ -13,34 +13,40 @@
         android:theme="@style/Theme.TridentSmartSolutions"
         tools:targetApi="31">
         <activity
-            android:name=".RequestHistoryActivity"
+            android:name=".ChangePasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".RequestFormActivity"
-            android:exported="false" />
+            android:name=".EditProfileActivity"
+            android:exported="false" /> <!-- 🟩 LOGIN PAGE (Launcher Activity) -->
         <activity
-            android:name=".ProfilePage"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".LoginPage"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> <!-- 🟦 SIGN-UP PAGE -->
         <activity
             android:name=".SignupPage"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" /> <!-- 🟨 MAIN ACTIVITY (Home after login/signup) -->
         <activity
-            android:name=".LoginPage"
-            android:exported="false" />
-        <activity
-            android:name=".CustomerPage"
-            android:exported="false" />
+            android:name=".MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" /> <!-- 🟧 OTHER APP PAGES -->
         <activity
             android:name=".RequestPage"
+            android:exported="false" />
+        <activity
+            android:name=".RequestFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RequestHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfilePage"
             android:exported="false" />
     </application>
 

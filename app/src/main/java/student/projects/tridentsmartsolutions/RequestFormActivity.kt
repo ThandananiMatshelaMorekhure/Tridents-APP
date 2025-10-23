@@ -204,8 +204,9 @@ class RequestFormActivity : AppCompatActivity() {
             }
     }
 
+
     private fun navigateToHome() {
-        startActivity(Intent(this, MainActivity::class.java).apply {
+        startActivity(Intent(this, RequestPage::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         })
         finish()
