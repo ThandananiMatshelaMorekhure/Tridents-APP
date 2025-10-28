@@ -27,7 +27,7 @@
                 android:id="@+id/logoImage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/s"
+                android:src="@drawable/ic_trident_logo"
                 />
 
             <TextView
@@ -244,6 +244,21 @@
                     app:cornerRadius="12dp"
                     app:strokeColor="#ff6b6b"
                     app:strokeWidth="2dp" />
+                <!-- Biometric Sign-in (always present in layout) -->
+
+                <Button
+                    android:id="@+id/btn_biometric_signin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_outline"
+                    android:text="Sign in with biometrics"
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:drawableStart="@drawable/ic_fingerprint"
+                    android:drawablePadding="12dp"
+                    android:padding="12dp"
+                    android:layout_marginBottom="8dp" />
+
 
             </LinearLayout>
 

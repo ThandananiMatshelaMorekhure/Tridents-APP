@@ -239,6 +239,33 @@
                                 android:text="Not provided"
                                 android:textColor="@color/primary_dark"
                                 android:textSize="16sp" />
+                            <!-- Biometric Status (Newly Added) -->
+                            <LinearLayout
+                                android:id="@+id/layout_biometric_status"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="8dp">
+
+                                <TextView
+                                    android:id="@+id/tv_biometric_label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Biometric Sign-In:"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black" />
+
+                                <TextView
+                                    android:id="@+id/tv_biometric_status"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Disabled ❌"
+                                    android:textColor="@color/emergency_red"
+                                    android:layout_marginStart="6dp" />
+                            </LinearLayout>
+
 
                         </LinearLayout>
 

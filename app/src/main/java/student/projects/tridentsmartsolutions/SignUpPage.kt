@@ -98,7 +98,7 @@ class SignupPage : AppCompatActivity() {
                     // Sign up success
                     val user = auth.currentUser
                     user?.let {
-                        // Save user data to Realtime Database
+                        // Save user data to Realtime Database with role
                         saveUserDataToDatabase(it.uid, fullName, email, phone, address)
                     }
                 } else {
@@ -128,7 +128,8 @@ class SignupPage : AppCompatActivity() {
             "email" to email,
             "phone" to phone,
             "address" to address,
-            "registrationDate" to System.currentTimeMillis()
+            "registrationDate" to System.currentTimeMillis(),
+            "role" to "client" // ADDED: Default role for new users
         )
 
         userRef.setValue(userData)
@@ -226,7 +227,6 @@ class SignupPage : AppCompatActivity() {
             apply()
         }
     }
-
 
     private fun navigateToLogin() {
         val intent = Intent(this, LoginPage::class.java)

@@ -9,8 +9,8 @@
     <color name="teal_primary">#4a90a4</color>
     <color name="primary_blue">#2A3B56</color>
     <color name="secondary_blue">#4A90A4</color>
-
+    <color name="black">#000000</color>
     <color name="background_light">#F8FAFF</color>
     <color name="text_primary">#2A3B56</color>
-
+    <color name="success_green">#00FF00</color>
 </resources>

@@ -4,9 +4,14 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import com.google.android.material.card.MaterialCardView
 
 class ProfilePage : AppCompatActivity() {
@@ -19,13 +24,20 @@ class ProfilePage : AppCompatActivity() {
     private lateinit var btnEditProfile: Button
     private lateinit var btnChangePassword: Button
     private lateinit var btnLogout: Button
-
     private lateinit var btnStatus: Button
+
+    // Biometric Status Components
+    private lateinit var tvBiometricStatus: TextView
+    private lateinit var layoutBiometricStatus: LinearLayout
 
     // Navigation
     private lateinit var navHome: MaterialCardView
     private lateinit var navRequest: MaterialCardView
     private lateinit var navAccount: MaterialCardView
+
+    // Biometric prefs constants (match what EditProfile/Login use)
+    private val BIO_PREFS = "biometric_prefs"
+    private val KEY_BIO_ENABLED = "biometric_enabled"
 
     // SharedPreferences
     private lateinit var sharedPreferences: SharedPreferences
@@ -38,12 +50,14 @@ class ProfilePage : AppCompatActivity() {
         initializePreferences()
         setupClickListeners()
         loadUserData()
+        updateBiometricStatus()
     }
 
     override fun onResume() {
         super.onResume()
         // Reload user data when returning from Edit Profile
         loadUserData()
+        updateBiometricStatus()
     }
 
     private fun initializeViews() {
@@ -56,6 +70,10 @@ class ProfilePage : AppCompatActivity() {
         btnLogout = findViewById(R.id.btn_logout)
         btnStatus = findViewById(R.id.btn_Status_Report)
 
+        // Biometric status views
+        tvBiometricStatus = findViewById(R.id.tv_biometric_status)
+        layoutBiometricStatus = findViewById(R.id.layout_biometric_status)
+
         // Navigation
         navHome = findViewById(R.id.nav_home)
         navRequest = findViewById(R.id.nav_request)
@@ -65,7 +83,6 @@ class ProfilePage : AppCompatActivity() {
     private fun initializePreferences() {
         sharedPreferences = getSharedPreferences("TridentPrefs", MODE_PRIVATE)
     }
-
 
     private fun setupClickListeners() {
         btnEditProfile.setOnClickListener {
@@ -96,6 +113,11 @@ class ProfilePage : AppCompatActivity() {
         btnStatus.setOnClickListener {
             navigateToStatusReport()
         }
+
+        // Make biometric status clickable to navigate to edit profile
+        layoutBiometricStatus.setOnClickListener {
+            navigateToEditProfile()
+        }
     }
 
     private fun loadUserData() {
@@ -108,6 +130,17 @@ class ProfilePage : AppCompatActivity() {
         tvUserEmail.text = email
         tvUserPhone.text = phone
         tvUserAddress.text = address
+    }
+
+    private fun updateBiometricStatus() {
+        val isEnabled = isBiometricEnabled()
+        if (isEnabled) {
+            tvBiometricStatus.text = "Enabled ✅"
+            tvBiometricStatus.setTextColor(ContextCompat.getColor(this, R.color.success_green))
+        } else {
+            tvBiometricStatus.text = "Disabled ❌"
+            tvBiometricStatus.setTextColor(ContextCompat.getColor(this, R.color.emergency_red))
+        }
     }
 
     private fun navigateToStatusReport(){
@@ -153,5 +186,23 @@ class ProfilePage : AppCompatActivity() {
         val intent = Intent(this, LoginPage::class.java)
         startActivity(intent)
         finishAffinity() // Clear all activities
+    }
+
+    private fun isBiometricEnabled(): Boolean {
+        return try {
+            val masterKey = MasterKey.Builder(applicationContext)
+                .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                .build()
+            val encPrefs = EncryptedSharedPreferences.create(
+                applicationContext,
+                BIO_PREFS,
+                masterKey,
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+            encPrefs.getBoolean(KEY_BIO_ENABLED, false)
+        } catch (e: Exception) {
+            false
+        }
     }
 }
