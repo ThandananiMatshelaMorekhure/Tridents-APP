@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "225127868321-38to6un31234jct39qpak6mtj5c2dp3f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "student.projects.tridentsmartsolutions",
+            "certificate_hash": "490f8f664af4de9e937377475d6b145e102a47bf"
+          }
+        },
+        {
           "client_id": "225127868321-nkdr8e2ccpohsns9m94rnpll7kp1fbao.apps.googleusercontent.com",
           "client_type": 3
         }

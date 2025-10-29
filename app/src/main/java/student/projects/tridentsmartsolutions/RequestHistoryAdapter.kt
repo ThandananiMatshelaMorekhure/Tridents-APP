@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.util.Locale
 
 class RequestHistoryAdapter(
     private var requests: List<ServiceRequest>,
@@ -48,7 +49,7 @@ class RequestHistoryAdapter(
             tvPreferredDate.text = request.getFormattedPreferredDate()
 
             // Set status with color
-            tvStatus.text = request.status.capitalize()
+            tvStatus.text = request.status.capitalize(Locale.ROOT)
             when (request.status.lowercase()) {
                 "pending" -> {
                     tvStatus.setBackgroundResource(R.drawable.status_badge_pending)
